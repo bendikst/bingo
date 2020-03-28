@@ -1,1 +1,2 @@
-# bingo
+# Bingo
+Very simple interface for playing bingo with your friends. Makes it much easier to keep track of the boards if you have many. Draws the boards and numbers drawn, which is given as input from the command line.
