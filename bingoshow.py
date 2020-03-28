@@ -1,12 +1,3 @@
-"""
-Starting Template
-
-Once you have learned how to use classes, you can begin your program with this
-template.
-
-If Python and Arcade are installed, this example can be run from the command line with:
-python -m arcade.examples.starting_template
-"""
 import arcade
 import bingocheck
 import numpy as np
@@ -18,23 +9,14 @@ SCREEN_HEIGHT = m[0].height-(m[0].height//6)
 SCREEN_TITLE = "BINGO"
 
 
-
-
 class MyGame(arcade.Window):
-    """
-    Main application class.
-
-    NOTE: Go ahead and delete the methods you don't need.
-    If you do need a method, delete the 'pass' and replace it
-    with your own code. Don't leave 'pass' in this program.
-    """
 
     def __init__(self, width, height, title):
         super().__init__(width, height, title)
 
         arcade.set_background_color(arcade.color.BLACK)
 
-        self.bingo_boards = bingocheck.test_board_two
+        self.bingo_boards = bingocheck.test_board_one
         self.bingo_list = []
         self.nb_boards = len(self.bingo_boards)
         self.rows_per_board = len(self.bingo_boards[0])
