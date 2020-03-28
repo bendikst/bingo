@@ -88,13 +88,13 @@ class MyGame(arcade.Window):
 
 
     def draw_board(self, board, i):
+        base_x = (1 + i % self.columns_of_boards) * self.screen_margin_horizontal + (i * self.board_size_x)
+        base_y = (i // 5 + 1) * self.screen_margin_vertical + ((i//5)  * self.board_size_x)
         for row in range(self.rows_per_board):
             for column in range(self.columns_per_board):
                 data = board[row, column]
-                x = (1 + i % self.columns_of_boards) * self.screen_margin_horizontal + (i * self.board_size_x) + (self.cell_width * column)
-                y = (i // 5 + 1) * self.screen_margin_vertical + ((i//5)  * self.board_size_x) + (self.cell_width * row)
-                if i == 0:
-                    print(y)
+                x = base_x + (self.cell_width * column)
+                y = base_y + (self.cell_width * row)
 
                 if data in self.bingo_list:
                     arcade.draw_rectangle_filled(x, y, self.cell_width, self.cell_height, arcade.color.GREEN)
