@@ -3,8 +3,8 @@ import arcade
 
 board_1 = np.array(([13,16,39,52,61], [4,23,38,56,72], [12,22,45,60,62], [6, 21, 40, 59, 69],  [5,24,34,51,63]))
 board_2 = np.array(([14,28,44,53,63], [12,16,36,57,72], [8,29,40,49,75], [10, 30, 43, 58, 62],  [7,20,45,54,67]))
-test_list = np.array(([0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0]))
-test_board_two = np.array([test_list, board_1, board_2, board_1, board_1, board_1, board_1, board_1, board_1, board_2, board_2, board_2, board_2, board_2, board_2])
+test_list = np.array(([1,2,3,4,5], [2,0,0,0,0], [3,0,0,0,0], [4,0,0,0,0], [5,0,0,0,0]))
+test_board_two = np.array([test_list, board_1, board_2, board_1, board_1, board_1, board_1, board_1, board_1, board_2, board_2])
 
 
 def check_board(board, correct_list):
