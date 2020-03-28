@@ -10,16 +10,12 @@ test_board_one = np.array([test_list, test_list, test_list, test_list, test_list
 
 
 def check_board(board, correct_list):
-    ver_len = len(board)
-    hor_len = len(board[0])
-
-    for i in range(ver_len):
-        if check_list(board[i], correct_list) >= ver_len:
-            print("BINGO!!!")
-    
-    for j in range(hor_len):
-        if check_list(board[:,j], correct_list) >= hor_len:
-            print("BINGO")
+    l_size = len(board[0])
+    nb_bingos = 0
+    for j in range(l_size):
+        if check_list(board[j], correct_list) >= l_size:
+            nb_bingos += 1
+    return nb_bingos
 
 
 def check_list(list, correct):
