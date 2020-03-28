@@ -16,7 +16,6 @@ m = get_monitors()
 SCREEN_WIDTH = m[0].width
 SCREEN_HEIGHT = m[0].height-(m[0].height//6)
 SCREEN_TITLE = "BINGO"
-MAX_BOARDS_PER_ROW = 8
 
 
 
@@ -41,24 +40,34 @@ class MyGame(arcade.Window):
         self.rows_per_board = len(self.bingo_boards[0])
         self.columns_per_board = len(self.bingo_boards[0, 0])
 
+        MAX_BOARDS_PER_ROW = self.get_optimal_boards_per_row()
+
+
         self.columns_of_boards = MAX_BOARDS_PER_ROW if self.nb_boards >= MAX_BOARDS_PER_ROW else self.nb_boards
-        self.rows_of_boards = 1 + self.nb_boards // MAX_BOARDS_PER_ROW
+        self.rows_of_boards = 1 + (self.nb_boards-1) // MAX_BOARDS_PER_ROW
 
         self.new_numbers_list_height = SCREEN_HEIGHT//4
-
 
         self.nb_cells_x = self.columns_of_boards*self.columns_per_board + self.columns_of_boards + 1
         self.nb_cells_y = self.rows_of_boards*self.rows_per_board + self.rows_of_boards + 1 
 
-        self.cell_size = min(SCREEN_HEIGHT-self.new_numbers_list_height)//self.nb_cells_y, )
+        self.cell_size = min((SCREEN_HEIGHT-self.new_numbers_list_height)//self.nb_cells_y, SCREEN_WIDTH//self.nb_cells_x)
 
+        self.new_numbers_list_cells_per_row = (SCREEN_WIDTH // self.cell_size) - 2
         self.board_size_x = self.columns_per_board * self.cell_size
         self.board_size_y = self.rows_per_board * self.cell_size
 
 
     def setup(self):
-        # Create your sprites and sprite lists here
         pass
+
+    def get_optimal_boards_per_row(self):
+        if self.nb_boards <= 12:
+            return 6
+        elif self.nb_boards <= 30:
+            return 10
+        else:
+            return 12
 
     def on_draw(self):
         """
@@ -69,7 +78,6 @@ class MyGame(arcade.Window):
         
         for i in range(len(self.bingo_boards)):
             self.draw_board(self.bingo_boards[i], i)
-            print("drawing board", i)
         self.draw_list(self.bingo_list)
         with open('bingolist.txt', 'w') as f:
             for item in self.bingo_list:
@@ -94,9 +102,6 @@ class MyGame(arcade.Window):
 
 
     def draw_board(self, board, i):
-        # base_x = (1 + i % self.columns_of_boards) * self.screen_margin_horizontal + (i * self.board_size_x)
-        # base_y = (i // 5 + 1) * self.screen_margin_vertical + ((i//5)  * self.board_size_x)
-        
         base_x = ((i % self.columns_of_boards)+1) * self.cell_size + (i % self.columns_of_boards) * self.board_size_x
         base_y = SCREEN_HEIGHT - self.new_numbers_list_height - ((i // self.columns_of_boards) + 1) * self.cell_size - (i // self.columns_of_boards) * self.board_size_y
         
@@ -115,10 +120,11 @@ class MyGame(arcade.Window):
                 
     def draw_list(self, liste):
         for i in range(len(liste)):
-            x = self.screen_margin_horizontal//2 + i%20 * self.cell_size
-            y = SCREEN_HEIGHT - self.screen_margin_vertical//2 - i//20*self.cell_size
+            x = self.cell_size*(i % 20 + 1)
+            y = SCREEN_HEIGHT - self.cell_size - (i//20)*self.cell_size
             arcade.draw_rectangle_outline(x, y, self.cell_size, self.cell_size, arcade.color.WHITE)
             arcade.draw_text(str(liste[i]), x, y, arcade.color.WHITE, self.cell_size//2, align="center", anchor_x="center", anchor_y="center", bold=True)
+
 
 def main():
     """ Main method """
